@@ -32,7 +32,7 @@
     "react-dom": "^15.4.2",
     "terra-base": "^2.2.0",
     "terra-content-container": "^1.7.0",
-    "terra-icon": "^1.6.0"
+    "terra-icon": "^1.6.0",
     "terra-hookshot": "^0.x"
   },
   "dependencies": {
