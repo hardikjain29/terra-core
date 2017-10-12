@@ -59,6 +59,8 @@
   }
 
   .fullscreen {
+    height: 100%;
+    
     .header {
       background-color: var(--terra-menu-fullscreen-header-background-color, #fff);
       border-bottom: var(--terra-menu-fullscreen-header-border-bottom, 1px solid #dedfe0);
@@ -102,5 +104,9 @@
   .submenu .content {
     background-color: var(--terra-menu-submenu-background-color, #f9f9f9);
     color: var(--terra-menu-submenu-foreground-color, #1c1f21);
+  }
+
+  .hidden-page {
+    display: none;
   }
 }

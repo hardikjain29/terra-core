@@ -17,10 +17,9 @@ module.exports = resizeTo(['tiny', 'small', 'medium', 'large', 'huge', 'enormous
     browser
       .url(`${browser.launchUrl}/#/tests/menu-tests/bounded`)
       .click('.TestNestedMenu');
-    browser.waitForElementPresent('[class*="slide-group"] > div > div[class*="slide"]:not([class*="enter-active"]):nth-child(2)', 2000);
 
-    browser.assert.elementPresent('div[class*="slide"]:nth-child(2) div[class*="header"] > div[class*="fill"] div[class*="_header-button"]')
-      .assert.elementPresent('div[class*="slide"]:nth-child(2) div[class*="_header"] > div:last-child > button[class*="_header-button"]')
+    browser.assert.visible('div[class*="content"]:nth-child(2) div[class*="header"] > div[class*="fill"] div[class*="_header-button"]')
+      .assert.visible('div[class*="content"]:nth-child(2) div[class*="_header"] > div:last-child > button[class*="_close-button"]')
       .keys([browser.Keys.ESCAPE]);
   },
   'Displays a menu with a small calculated height': (browser) => {
