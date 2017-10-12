@@ -21,9 +21,9 @@ const propTypes = {
 
   /**
    * A string representation of the width in px, limited to:
-   * 160, 240, 320, 640, 960, 1280, 1760, or dynamic
+   * 160, 240, 320, 640, 960, 1280, 1760
    */
-  menuWidth: PropTypes.oneOf(['160', '240', '320', '640', '960', '1280', '1760', 'dynamic']),
+  menuWidth: PropTypes.oneOf(['160', '240', '320', '640', '960', '1280', '1760']),
 
   /**
    * Bounding container for the menu, will use window if no value provided.

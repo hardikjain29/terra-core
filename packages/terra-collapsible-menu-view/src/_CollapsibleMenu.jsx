@@ -17,9 +17,9 @@ const propTypes = {
   boundingRef: PropTypes.func,
   /**
    * A string representation of the width in px, limited to:
-   * 160, 240, 320, 640, 960, 1280, 1760, or dynamic
+   * 160, 240, 320, 640, 960, 1280, 1760
    */
-  contentWidth: PropTypes.oneOf(['160', '240', '280', '320', '640', '960', '1280', '1760', 'dynamic']),
+  contentWidth: PropTypes.oneOf(['160', '240', '280', '320', '640', '960', '1280', '1760']),
 
   /**
    * Button to display the menu from
