@@ -37,6 +37,35 @@ const propTypes = {
    * Index within the Menu Stack.
    */
   index: PropTypes.number.isRequired,
+  /**
+   * Bounding container for the menu, will use window if no value provided.
+   */
+  boundingRef: PropTypes.func,
+  /**
+   * Indicates if menu's height has been constrained by bounding container.
+   */
+  isHeightBounded: PropTypes.bool,
+  /**
+   * Indicates if menu's width has been constrained by bounding container.
+   */
+  isWidthBounded: PropTypes.bool,
+  /**
+   * Fixed height for content.
+   */
+  fixedHeight: PropTypes.number,
+  /**
+   * Fixed width for content.
+   */
+  fixedWidth: PropTypes.number,
+  contentWidth: PropTypes.number,
+  /**
+   * Indicates if the content should be hidden.
+   */
+  isHidden: PropTypes.bool,
+  /**
+   * Ref callback function to be applied to content container.
+   */
+  refCallback: PropTypes.func,
 };
 
 const defaultProps = {
@@ -125,13 +154,16 @@ class MenuContent extends React.Component {
     });
   }
 
-  buildHeader() {
+  buildHeader(isFullScreen) {
     const closeIcon = <IconClose />;
-    const closeButton = this.props.onRequestClose ? (
-      <button className={cx(['header-button', 'close-button'])} onClick={this.props.onRequestClose}>
-        {closeIcon}
-      </button>
-    ) : <div />;
+    let closeButton = <div />;
+    if (this.props.onRequestClose && isFullScreen) {
+      closeButton = (
+        <button className={cx(['header-button', 'close-button'])} onClick={this.props.onRequestClose}>
+          {closeIcon}
+        </button>
+      );
+    }
 
     const backIcon = <IconLeft />;
     const backButton = this.props.index > 0 ? (
@@ -202,15 +234,40 @@ class MenuContent extends React.Component {
 
       return newItem;
     });
+    const boundingFrame = this.props.boundingRef ? this.props.boundingRef() : undefined;
+    const isFullScreen = MenuUtils.isFullScreen(
+      this.props.isHeightBounded,
+      this.props.isWidthBounded,
+      boundingFrame,
+      this.props.contentWidth,
+    );
+    const isSubMenu = this.props.index > 0;
+    const contentClass = cx([
+      'content',
+      { submenu: isSubMenu },
+      { 'hidden-page': this.props.isHidden },
+      { fullscreen: isFullScreen },
+    ]);
 
-    const header = this.buildHeader();
+    let header;
+    if (isFullScreen || isSubMenu) {
+      header = this.buildHeader(isFullScreen);
+    }
+    const contentHeight = this.props.isHeightBounded ? '100%' : this.props.fixedHeight;
+    const contentWidth = this.props.isWidthBounded ? undefined : this.props.fixedWidth;
 
     return (
-      <ContentContainer header={header} fill className={cx(['content'])}>
-        <List className={cx(['list'])}>
-          {items}
-        </List>
-      </ContentContainer>
+      <div
+        ref={this.props.refCallback}
+        className={contentClass}
+        style={{ height: contentHeight, width: contentWidth }}
+      >
+        <ContentContainer header={header} fill={this.props.isHeightBounded}>
+          <List className={cx(['list'])}>
+            {items}
+          </List>
+        </ContentContainer>
+      </div>
     );
   }
 }

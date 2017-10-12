@@ -70,6 +70,8 @@ class BoundedMenu extends React.Component {
             <Menu.Item text="Default 62" key="62" />
             <Menu.Item text="Default 63" key="63" />
           </Menu.ItemGroup>
+          <Menu.Item text="Default 7" key="7" />
+          <Menu.Item text="Default 8" key="8" />
         </Menu>
         <button id="bounded-button" onClick={this.handleButtonClick} ref={this.setButtonNode}>
           Default Menu
