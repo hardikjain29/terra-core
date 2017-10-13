@@ -135,10 +135,10 @@ class Menu extends React.Component {
         fixedHeight={this.pageHeight}
         fixedWidth={this.pageWidth}
         contentWidth={Popup.widths[contentWidth]}
-        refCallback={index === 0 ? this.setPageDimensions : null}
+        refCallback={visiblePage === 0 ? this.setPageDimensions : null}
         index={index}
         boundingRef={boundingRef}
-
+        isFocused={index === visiblePage}
       >
         {item.props.children || item.props.subMenuItems}
       </MenuContent>
@@ -160,6 +160,7 @@ class Menu extends React.Component {
         onRequestClose={onRequestClose}
         targetRef={targetRef}
         isHeaderDisabled
+        isContentFocusDisabled
       >
         {slides}
       </Popup>

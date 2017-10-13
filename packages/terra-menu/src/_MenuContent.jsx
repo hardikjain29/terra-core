@@ -42,6 +42,10 @@ const propTypes = {
    */
   boundingRef: PropTypes.func,
   /**
+   * Indicates if the menu content should set default focus on itself.
+   */
+  isFocused: PropTypes.bool,
+  /**
    * Indicates if menu's height has been constrained by bounding container.
    */
   isHeightBounded: PropTypes.bool,
@@ -70,6 +74,7 @@ const propTypes = {
 
 const defaultProps = {
   children: [],
+  isFocused: false,
   title: '',
 };
 
@@ -85,6 +90,8 @@ class MenuContent extends React.Component {
     this.buildHeader = this.buildHeader.bind(this);
     this.isSelectable = this.isSelectable.bind(this);
     this.onKeyDownBackButton = this.onKeyDownBackButton.bind(this);
+    this.validateFocus = this.validateFocus.bind(this);
+    this.needsFocus = props.isFocused;
 
     this.state = {
       focusIndex: -1,
@@ -95,10 +102,29 @@ class MenuContent extends React.Component {
     return { isSelectableMenu: this.isSelectable() };
   }
 
+  componentWillReceiveProps(newProps) {
+    if (newProps.isFocused) {
+      this.needsFocus = this.needsFocus || this.props.isFocused !== newProps.isFocused;
+    } else {
+      this.needsFocus = false;
+    }
+  }
+
+  componentDidUpdate() {
+    this.validateFocus(this.contentNode);
+  }
+
   onKeyDownBackButton(event) {
     if (event.nativeEvent.keyCode === MenuUtils.KEYCODES.ENTER || event.nativeEvent.keyCode === MenuUtils.KEYCODES.SPACE) {
       event.preventDefault();
       this.props.onRequestBack();
+    }
+  }
+
+  validateFocus(node) {
+    if (this.needsFocus && node) {
+      node.focus();
+      this.needsFocus = document.activeElement !== node;
     }
   }
 
@@ -254,15 +280,17 @@ class MenuContent extends React.Component {
       header = this.buildHeader(isFullScreen);
     }
     const contentHeight = this.props.isHeightBounded ? '100%' : this.props.fixedHeight;
+    const contentPosition = this.props.isHeightBounded ? 'relative' : 'static';
     const contentWidth = this.props.isWidthBounded ? undefined : this.props.fixedWidth;
 
     return (
       <div
-        ref={this.props.refCallback}
+        ref={(element) => { if (this.props.refCallback) { this.props.refCallback(element); } this.contentNode = element; this.validateFocus(element); }}
         className={contentClass}
-        style={{ height: contentHeight, width: contentWidth }}
+        style={{ height: contentHeight, width: contentWidth, position: contentPosition }}
+        tabIndex="0"
       >
-        <ContentContainer header={header} fill={this.props.isHeightBounded}>
+        <ContentContainer header={header} fill={this.props.isHeightBounded || this.props.index > 0}>
           <List className={cx(['list'])}>
             {items}
           </List>
