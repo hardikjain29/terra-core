@@ -2,6 +2,10 @@
 
 
 [![NPM version](http://img.shields.io/npm/v/terra-alert.svg)](https://www.npmjs.org/package/terra-alert)
+[![Dependency Status](https://david-dm.org/cerner/terra-core/status.svg?path=packages/terra-alert.svg)](https://david-dm.org/cerner/terra-core?path=packages%2Fterra-alert%2F) 
+[![devDependency Status](https://david-dm.org/cerner/terra-core/dev-status.svg?path=packages/terra-alert.svg)](https://david-dm.org/cerner/terra-core?path=packages%2Fterra-alert%2F&type=dev) 
+[![devDependency Status](https://david-dm.org/cerner/terra-core/peer-status.svg?path=packages/terra-alert.svg)](https://david-dm.org/cerner/terra-core?path=packages%2Fterra-alert%2F&type=peer) 
+
 [![Build Status](https://travis-ci.org/cerner/terra-core.svg?branch=master)](https://travis-ci.org/cerner/terra-core)
 
 The Terra Alert component is a notification banner that can be rendered in your application when there is information that you want to bring to the user's attention. The Alert component supports a number of built-in notification types that render with pre-defined colors and icons that help the user understand the severity and meaning of the notification. A custom notification type is also supported that allows your application to customize an alert that may not fit into the pre-defined types.
